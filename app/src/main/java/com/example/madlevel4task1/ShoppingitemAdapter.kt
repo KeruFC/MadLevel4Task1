@@ -14,7 +14,7 @@ class ShoppingitemAdapter(private val shoppingItems: List<Shoppingitem>): Recycl
 
         fun databind(shoppingitem: Shoppingitem) {
             binding.tvName.text = shoppingitem.shoppingItemName
-            binding.tvAmount.text = shoppingitem.shoppingItemAmount
+            binding.tvAmount.text = shoppingitem.shoppingItemAmount.toString()
         }
     }
 
