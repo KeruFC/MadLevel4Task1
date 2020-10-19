@@ -15,12 +15,12 @@ class ShoppingitemRepository(context: Context) {
         return shoppingitemDao.getAllShoppingitems()
     }
 
-    suspend fun insertProduct(product: Shoppingitem) {
-        shoppingitemDao.insertProduct(product)
+    suspend fun insertProduct(shoppingitem: Shoppingitem) {
+        shoppingitemDao.insertProduct(shoppingitem)
     }
 
-    suspend fun deleteProduct(product: Shoppingitem) {
-        shoppingitemDao.deleteProduct(product)
+    suspend fun deleteProduct(shoppingitem: Shoppingitem) {
+        shoppingitemDao.deleteProduct(shoppingitem)
     }
 
     suspend fun deleteAllProducts() {

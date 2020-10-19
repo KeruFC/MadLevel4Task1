@@ -9,4 +9,6 @@
 
     <string name="add_product">Add Product</string>
     <string name="amount">Amount</string>
+    <string name="add_product_dialog_title">Add a product to your list!</string>
+    <string name="dialog_ok_btn">OK</string>
 </resources>

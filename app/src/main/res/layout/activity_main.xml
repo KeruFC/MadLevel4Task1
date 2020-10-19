@@ -22,27 +22,4 @@
 
     <include layout="@layout/content_main" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="20dp"
-        android:tint="#FFFFFF"
-        app:backgroundTint="#4CAF50"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginStart="70dp"
-        android:layout_marginBottom="20dp"
-        android:tint="#FFFFFF"
-        android:tintMode="src_in"
-        app:backgroundTint="#F44336"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

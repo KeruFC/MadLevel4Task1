@@ -2,11 +2,14 @@ package com.example.madlevel4task1
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,7 +71,7 @@ class ShoppingFragment : Fragment() {
     private fun showAddProductdialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.add_product_dialog_title))
-        val dialogLayout = layoutInflater.inflate(R.layout.add_product_dialog, null)
+        val dialogLayout = layoutInflater.inflate(R.layout.fragment_add_shopping, null)
         val productName = dialogLayout.findViewById<EditText>(R.id.txt_product_name)
         val amount = dialogLayout.findViewById<EditText>(R.id.txt_amount)
 
@@ -82,19 +85,33 @@ class ShoppingFragment : Fragment() {
     private fun addProduct(txtProductName: EditText, txtAmount: EditText) {
         if (validateFields(txtProductName, txtAmount)) {
             mainScope.launch {
-                val product = Product(
-                    productName = txtProductName.text.toString(),
-                    productQuantity = txtAmount.text.toString().toShort()
+                val product = Shoppingitem(
+                    shoppingItemName = txtProductName.text.toString(),
+                    shoppingItemAmount = txtAmount.text.toString().toShort()
                 )
 
                 withContext(Dispatchers.IO) {
-                    productRepository.insertProduct(product)
+                    shoppingitemRepository.insertProduct(product)
                 }
 
                 getShoppingListFromDatabase()
             }
         }
     }
+
+    private fun validateFields(txtProductName: EditText
+                               , txtAmount: EditText
+    ): Boolean {
+        return if (txtProductName.text.toString().isNotBlank()
+            && txtAmount.text.toString().isNotBlank()
+        ) {
+            true
+        } else {
+            Toast.makeText(activity, "Please fill in the fields", Toast.LENGTH_LONG).show()
+            false
+        }
+    }
+
 
     private fun getShoppingListFromDatabase() {
         mainScope.launch {
@@ -126,8 +143,13 @@ class ShoppingFragment : Fragment() {
             // Callback triggered when a user swiped an item.
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                shoppingItems.removeAt(position)
-                shoppingitemAdapter.notifyDataSetChanged()
+                val productToDelete = shoppingItems[position]
+                mainScope.launch {
+                    withContext(Dispatchers.IO) {
+                        shoppingitemRepository.deleteProduct(productToDelete)
+                    }
+                    getShoppingListFromDatabase()
+                }
             }
         }
         return ItemTouchHelper(callback)
