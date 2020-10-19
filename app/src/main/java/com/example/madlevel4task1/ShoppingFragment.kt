@@ -51,6 +51,10 @@ class ShoppingFragment : Fragment() {
         fab_add.setOnClickListener{
             showAddProductdialog()
         }
+
+        fab_remove.setOnClickListener {
+            removeAllProducts()
+        }
     }
 
     private fun initRv() {
@@ -153,6 +157,15 @@ class ShoppingFragment : Fragment() {
             }
         }
         return ItemTouchHelper(callback)
+    }
+
+    private fun removeAllProducts() {
+        mainScope.launch {
+            withContext(Dispatchers.IO) {
+                shoppingitemRepository.deleteAllProducts()
+            }
+            getShoppingListFromDatabase()
+        }
     }
 
 }
